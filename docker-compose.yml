@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:latest # para o docker baixar a imagem mais recente do Postgres
+    volumes: # onde salvar os dados
+      - postgres_data:/var/lib/postgresql/data
+    environment: # declarar variáveis de ambiente
+      # de forma manual (hardcode):
+      # POSTGRES_DB: mydatabase
+      # POSTGRES_USER: user
+      # POSTGRES_PASSWORD: password
+      #
+      # puxando do .env:
+      - .env
+    networks:
+      - mynetwork
+
+networks: # cada imagem enxerga apenas ela mesma, então a network serve para que as imagens "conversem"
+  mynetwork:
+
+volumes: # informando ao docker que ele está permitido em usar esse path e criar arquivos lá
+  postgres_data:

@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "aula20-bootcamp"
+version = "0.1.0"
+description = ""
+authors = ["sch-paulo <pschmitzjr@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+sqlalchemy = "^2.0.37"
+pydantic = "^2.10.5"
+fastapi = "^0.115.7"
+uvicorn = "^0.34.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
