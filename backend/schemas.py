@@ -5,7 +5,7 @@ from typing import Optional
 
 class ProductBase(BaseModel):
     name: str
-    description: str
+    description: Optional[str] = None
     price: PositiveFloat
     category: str
     email_supplier: EmailStr
@@ -18,7 +18,7 @@ class ProductResponse(ProductBase):
     created_at: datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class ProductUpdate(BaseModel):
     name: Optional[str] = None

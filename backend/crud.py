@@ -15,6 +15,10 @@ def get_product(db: Session, product_id: int): # SELECT WHERE id = product_id
     return db.query(ProductModel).filter(ProductModel.id == product_id).first()
 
 def create_product(db: Session, product: ProductCreate): # INSERT INTO
+    '''
+    Função que insere um novo produto no banco, de acordo com o
+    schema ProductCreate
+    '''
     # Transformar view para ORM
     db_product = ProductModel(**product.model_dump())
 
@@ -31,12 +35,19 @@ def create_product(db: Session, product: ProductCreate): # INSERT INTO
     return db_product
 
 def delete_product(db: Session, product_id: int): # DELETE WHERE id = product_id
+    '''
+    Função que deleta um item do banco de dados, através do product_id
+    '''
     db_product = db.query(ProductModel).filter(ProductModel.id == product_id).first()
     db.delete(db_product)
     db.commit()
     return db_product
 
 def update_product(db: Session, product_id: int, product: ProductUpdate): # UPDATE WHERE id = product_id
+    '''
+    Função que altera um ou mais campos de um item, de acordo com o schema
+    ProductUpdate
+    '''
     db_product = db.query(ProductModel).filter(ProductModel.id == product_id).first()
 
     if db_product is None:

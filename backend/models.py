@@ -5,10 +5,10 @@ from database import Base
 class ProductModel(Base):
     __tablename__ = 'products' # nome da tabela
     
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    description = Column(String)
-    price = Column(Float)
-    category = Column(String)
-    email_supplier = Column(String)
-    created_at = Column(DateTime(timezone=True), default=func.now())
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, index=True)
+    description = Column(String, index=True)
+    price = Column(Float, index=True)
+    category = Column(String, index=True)
+    email_supplier = Column(String, index=True)
+    created_at = Column(DateTime(timezone=True), default=func.now(), index=True)

@@ -3,15 +3,31 @@ services:
     image: postgres:latest # para o docker baixar a imagem mais recente do Postgres
     volumes: # onde salvar os dados
       - postgres_data:/var/lib/postgresql/data
-    environment: # declarar variáveis de ambiente
-      # de forma manual (hardcode):
+    # environment: # declarar variáveis de ambiente de forma manual (hardcode)
       # POSTGRES_DB: mydatabase
       # POSTGRES_USER: user
       # POSTGRES_PASSWORD: password
       #
-      # puxando do .env:
+    env_file: # declarar puxando do .env:
       - .env
     networks:
+      - mynetwork
+  
+  backend:
+    build: # onde o código que será "buildado" está localizado
+      context: ./backend 
+      dockerfile: Dockerfile # nome da Dockerfile que o Docker precisará buscar
+    volumes: # monta o diretório (backend) no diretório /app dentro do container
+      - ./backend:/app # isso permite a sincronização em tempo real entre o ambiente local e o container
+    env_file: # carregar variáveis do .env
+      - .env
+    environment: # fornece a conexão com o banco Postgres
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres/${POSTGRES_DB}
+    ports: # mapeia porta host com a porta do container
+      - "8000:8000"
+    depends_on: # dependência do serviço. garante que o postgres será inicializado antes do backend
+      - postgres
+    networks: # declara a rede que o serviço participa, para permitir comunicação com o Postgres
       - mynetwork
 
 networks: # cada imagem enxerga apenas ela mesma, então a network serve para que as imagens "conversem"
